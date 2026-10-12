@@ -13,32 +13,38 @@ class BasePage:
 
     @allure.step("Закрыть баннер cookie-согласия")
     def close_cookie_banner(self):
-        locator = (By.CSS_SELECTOR, ".App_CookieConsent__1yUIN")
         try:
-            close_btn = self.wait.until(
-                EC.element_to_be_clickable((By.CSS_SELECTOR, ".App_CookieConsent__1yUIN button"))
-            )
-            close_btn.click()
-        except Exception:
-            self.wait.until(EC.invisibility_of_element_located(locator))
+            btn = self.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".App_CookieConsent button")))
+            btn.click()
+        except TimeoutException:
+            pass
 
     def find_element_with_wait(self, locator):
         return self.wait.until(EC.element_to_be_clickable(locator))
 
     def click_element_with_wait(self, locator):
-        self.wait.until(EC.element_to_be_clickable(locator)).click()
+        element = self.wait.until(EC.element_to_be_clickable(locator))
+        element.click()
 
-    def is_url_opened(self, url):
-        try:
-            self.wait.until(EC.url_to_be(url))
-            return True
-        except TimeoutException:
-            return False
+    def wait_for_url(self, url, timeout=15):
+        wait = WebDriverWait(self.driver, timeout)
+        wait.until(lambda d: d.current_url == url)
+
+    def wait_for_new_window(self, original_handle, timeout=15):
+        wait = WebDriverWait(self.driver, timeout)
+        def condition(driver):
+            handles = driver.window_handles
+            return len(handles) > 1 and any(h != original_handle for h in handles)
+        wait.until(condition)
+        for h in self.driver.window_handles:
+            if h != original_handle:
+                return h
+        raise TimeoutException("Новая вкладка не появилась")
 
     def scroll_to_element(self, locator):
-        element = self.find_element_with_wait(locator)
-        self.driver.execute_script("arguments[0].scrollIntoView();", element)
-        return element
+        el = self.find_element_with_wait(locator)
+        self.driver.execute_script("arguments[0].scrollIntoView();", el)
+        return el
 
     def get_text(self, locator):
         return self.find_element_with_wait(locator).text

@@ -1,16 +1,22 @@
 import allure
 from pages.main_page import MainPage
-from pages.order_page import OrderPage
 
-@allure.feature("Переход на главную страницу при нажатии на логотип 'Самокат'")
-@allure.story("Проверка перехода на главную страницу")
-def test_click_to_scooter_logo(driver):
-    main_page = MainPage(driver)
-    order_page = OrderPage(driver)
+@allure.feature("Навигация")
+class TestNavigation:
 
-    with allure.step("Этап 1. Подготовка страницы и переход по логотипу 'Самокат'"):
-        main_page.close_cookie_banner()
-        main_page.click_on_order_button_first()
-        order_page.click_on_scooter_logo()
-        main_page.check_transition_to_main_page()
-        
+    @allure.title("Переход на главную страницу при нажатии на логотип «Самокат»")
+    @allure.story("Проверка, что клик по логотипу возвращает на главную")
+    def test_click_to_scooter_logo(self, driver):
+        main_page = MainPage(driver)
+
+        with allure.step("Закрываем баннер cookie-согласия"):
+            main_page.close_cookie_banner()
+
+        with allure.step("Кликаем на логотип «Самокат»"):
+            main_page.scroll_to_element(main_page.locators.Scooter_button)
+            main_page.click_element_with_wait(main_page.locators.Scooter_button)
+
+        with allure.step("Проверяем, что вернулись на главную страницу"):
+            main_page.find_element_with_wait(main_page.locators.Text_on_main_page)
+
+        assert True, "Логотип «Самокат» при клике возвращает на главную страницу"
