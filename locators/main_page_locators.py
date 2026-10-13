@@ -21,7 +21,7 @@ class AnswerLocators:
     Answer_7 = [By.XPATH, "//div[@id='accordion__panel-6']"]
     Answer_8 = [By.XPATH, "//div[@id='accordion__panel-7']"]
 
-class OrderButton:
+class MainPageOrderButtonLocators: 
     Order_button_first = [By.XPATH, "//div[contains(@class,'Header_Nav')]//button[text()='Заказать']"]
     Order_button_second = [By.XPATH, "//div[contains(@class,'Home_FinishButton')]//button[text()='Заказать']"]
 
@@ -30,3 +30,4 @@ class MainPageLocators:
     Scooter_button = [By.XPATH, "//img[@alt='Scooter']"]
     Yandex_button = [By.XPATH, "//img[@alt='Yandex']"]
     Text_on_main_page = [By.XPATH, "//div[contains(@class, 'Home_Header')]"]
+    Cookie_banner = [By.CSS_SELECTOR, ".App_CookieConsent button"]

@@ -27,4 +27,3 @@ class OrderLocatorsSecond:
     Order_cancellation_button = [By.XPATH, "//button[normalize-space()='Отменить заказ']"]
     Order_number = [By.XPATH, "//div[contains(text(), 'Номер заказа') and @class='Order_Text__2broi']"]
     View_the_status_button = [By.XPATH, "//button[text()='Посмотреть статус' and @class='Button_Button__ra12g Button_Middle__1CSJM']"]
-
