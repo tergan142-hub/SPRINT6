@@ -14,9 +14,9 @@ Questions_Answers = [
     (QuestionLocators.Question_8, AnswerLocators.Answer_8, "Да, обязательно. Всем самокатов! И Москве, и Московской области."),
 ]
 
-@allure.feature("FAQ / Вопросы и ответы")
-@allure.story("Проверка соответствия вопросов и ответов на главной старнице")
-@allure.description("Проверяем на главной странице соответствие вопросов с ответами")
+@allure.title("При клике на вопрос должен отобразиться корректный ответ")
+@allure.story("Раскрытие вопроса и проверка текста ответа")
+@allure.feature("Вопросы и ответы")
 class TestQuestionAnswer:
     @pytest.mark.parametrize("question_locator, answer_locator, expected_text", Questions_Answers, ids=[f'question_{i}' for i in range(1, 9)])
     def test_question_opens_correct_answer(self, driver, question_locator, answer_locator, expected_text):

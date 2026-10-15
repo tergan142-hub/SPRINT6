@@ -19,9 +19,11 @@ class BasePage:
         except TimeoutException:
             pass
 
+    @allure.step("Найти элемент с временной задержкой")
     def find_element_with_wait(self, locator):
         return self.wait.until(EC.element_to_be_clickable(locator))
-
+    
+    @allure.step("Кликнуть по элементу с временной задержкой")
     def click_element_with_wait(self, locator):
         element = self.wait.until(EC.element_to_be_clickable(locator))
         element.click()
@@ -51,11 +53,13 @@ class BasePage:
     def switch_to_window(self, handle):
         self.driver.switch_to.window(handle)
 
+    @allure.step("Проскроллить до элемента с временной задержкой")
     def scroll_to_element(self, locator):
         el = self.find_element_with_wait(locator)
         self.driver.execute_script("arguments[0].scrollIntoView();", el)
         return el
 
+    @allure.step("Получить текст элемента")
     def get_text(self, locator):
         return self.find_element_with_wait(locator).text
 

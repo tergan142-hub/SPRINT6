@@ -35,8 +35,9 @@ class TestScooterOrder:
         with allure.step("Подтверждение заказа"):
             order_page.confirm_order()
 
-        order_page.verify_status_button_visible()
-        assert True, "Статус заказа виден — заказ оформлен"
+        with allure.step("Проверяем, что отображается кнопка статуса заказа"):
+            is_visible = order_page.verify_status_button_visible()
+            assert is_visible, "Кнопка статуса заказа не отображается — заказ не подтверждён"
 
     @allure.title("Вариант 2: заказ на 5 суток, серый самокат, комментарий курьеру")
     @allure.story("Проверка оформления заказа с дополнительными параметрами")
@@ -67,5 +68,6 @@ class TestScooterOrder:
         with allure.step("Подтверждение заказа"):
             order_page.confirm_order()
 
-        order_page.verify_order_number_present()
-        assert True, "Номер заказа отображается — заказ успешно оформлен"
+        with allure.step("Проверяем, что отображается кнопка статуса заказа"):
+            is_visible = order_page.verify_status_button_visible()
+            assert is_visible, "Кнопка статуса заказа не отображается — заказ не подтверждён"
